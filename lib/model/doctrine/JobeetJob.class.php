@@ -28,4 +28,18 @@ class JobeetJob extends BaseJobeetJob
    return Jobeet::slugify($this->getLocation());
  }
 
+/*
+   170211 adding save - http://symfony.com/legacy/doc/jobeet/1_4/en/06?orm=Doctrine
+*/
+ public function save(Doctrine_Connection $conn = null)
+ {
+   if ($this->isNew() && !$this->getExpiresAt())
+   {
+     $now = $this->getCreatedAt() ? $this->getDateTimeObject('created_at')->format('U') : time();
+     $this->setExpiresAt(date('Y-m-d H:i:s', $now + 86400 * 30));
+   }
+ 
+   return parent::save($conn);
+ }
+
 }
