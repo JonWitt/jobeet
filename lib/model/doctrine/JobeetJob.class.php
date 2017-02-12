@@ -43,4 +43,9 @@ class JobeetJob extends BaseJobeetJob
    return parent::save($conn);
  }
 
+ public function __toString()
+ {
+   return sprintf('%s at %s (%s)', $this->getPosition(), $this->getCompany(), $this->getLocation());
+ }
+
 }
